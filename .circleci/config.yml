@@ -1,0 +1,33 @@
+version: 2.1
+executors:
+  docker-publisher:
+    environment:
+      NODE_ENV: development # Needed if playwright is in `devDependencies`
+    docker:
+      - image: mcr.microsoft.com/playwright:bionic
+
+jobs:
+  node:
+  working_directory: ~repo
+  build:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install npm dependencies
+          command: |
+            npm install --save
+      - run:
+          name:
+          command: |
+            export FOLIO_JUNIT_OUTPUT_NAME="report/junit.xml"
+      - run:
+          name: Run tests
+          command: |
+            npm test
+
+      - store_artifacts:
+          path: ./test-results
+      - store_artifacts:
+          path: ./report

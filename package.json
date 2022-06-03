@@ -1,0 +1,52 @@
+{
+  "name": "tetsframe",
+  "version": "1.0.0",
+  "description": "automated testing with playwright",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "prettier": "prettier",
+    "eslint": "eslint",
+    "lint": "eslint ./tests",
+    "lint:fix": "eslint ./tests --fix",
+    "test": "npx playwright test tests/authentication.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Automation-Luch/tetsFrame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Automation-Luch/tetsFrame/issues"
+  },
+  "homepage": "https://github.com/Automation-Luch/tetsFrame#readme",
+  "dependencies": {
+    "@eslint-kit/eslint-config-base": "^2.1.0",
+    "@eslint-kit/eslint-config-node": "^2.0.0",
+    "@eslint-kit/eslint-config-prettier": "^2.0.0",
+    "@eslint-kit/eslint-config-react": "^2.0.0",
+    "@eslint-kit/eslint-config-typescript": "^3.1.1",
+    "babel-eslint": "10.1.0",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "eslint-import-resolver-babel-module": "^5.1.2",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-unicorn": "^33.0.1",
+    "node-fetch": "^2.6.1"
+  },
+  "engines": {
+    "node": ">=12.x"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.14.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.9.0",
+    "prettier": "^2.3.0"
+  }
+}
