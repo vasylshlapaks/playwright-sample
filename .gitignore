@@ -7,3 +7,7 @@ package-lock.json
 
 # env data
 .env
+
+# extensions data
+/extensions
+!extensions/exensionsHelpers.ts
