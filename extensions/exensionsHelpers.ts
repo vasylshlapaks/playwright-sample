@@ -1,4 +1,4 @@
-import {downloadFile} from "../helpers/apiHelpers/downloadFile";
+import {downloadFile} from "../helpers/api/downloadFile";
 const extract = require('extract-zip');
 
 const metamaskLink = 'https://github.com/vasylshlapaks/metamaskFiles/archive/refs/heads/master.zip';
