@@ -1,10 +1,12 @@
 import {test as base, chromium} from '@playwright/test';
 import {ConnectWalletPage} from "../page-object/connectWalletPage";
 import {MetamaskPage} from "../page-object/metamaskPage";
+import {WebPage} from "../page-object/webPage";
 
 type ixsFixtures = {
   connectWalletPage: ConnectWalletPage;
-  metamaskPage: MetamaskPage
+  metamaskPage: MetamaskPage,
+  webPage: WebPage
 };
 
 export const test = base.extend<ixsFixtures>({
@@ -45,7 +47,11 @@ export const test = base.extend<ixsFixtures>({
     await use(metamaskPage);
   },
 
-  connectWalletPage: async ({ page }, use) => {
-    await use(new ConnectWalletPage(page));
+  connectWalletPage: async ({ page, browser }, use) => {
+    await use(new ConnectWalletPage(page, browser));
+  },
+
+  webPage: async ({ page, browser }, use) => {
+    await use(new WebPage(page, browser));
   }
 });
