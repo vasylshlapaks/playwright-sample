@@ -34,7 +34,7 @@ export class WebPage {
     expect(await element.screenshot()).toMatchSnapshot(snapshotName);
   }
 
-  async openNewPage(click: void) {
+  async openNewPageBy(click: Promise<void>) {
     const [newPage] = await Promise.all([
       this.context.waitForEvent('page'),
       click
@@ -43,7 +43,7 @@ export class WebPage {
     return newPage;
   }
 
-  async openNewPopUp(click: void) {
+  async openNewPopUpBy(click: Promise<void>) {
     const [newPopUp] = await Promise.all([
       this.page.waitForEvent('popup'),
       click
