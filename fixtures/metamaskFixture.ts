@@ -3,16 +3,18 @@ import {ConnectWalletScreen} from "../page-object/connectWalletScreen";
 import {KycScreen} from "../page-object/kycScreen"
 import {MetamaskPage} from "../page-object/metamaskPage";
 import {WebPage} from "../page-object/webPage";
+import {TopNavigationBar} from "../page-object/topNavigationBar";
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
   kycScreen: KycScreen;
-  metamaskPage: MetamaskPage,
-  webPage: WebPage
+  metamaskPage: MetamaskPage;
+  topNavigationBar: TopNavigationBar;
+  webPage: WebPage;
 };
 
 export const test = base.extend<ixsFixtures>({
-  context: [async ({ browser }, use) => {
+  context: async ({ browser }, use) => {
     const pathToExtension = require('path').join(__dirname, '..', 'extensions/metamaskFiles-master');
     const userDataDir = '';
 
@@ -30,8 +32,8 @@ export const test = base.extend<ixsFixtures>({
     ]);
 
     await use(browserContext);
-    await browser.close();
-  }, { scope: 'test' }],
+    await browserContext.close();
+  },
 
   // Overwriting of page for using it in the same browser with metamask
   page: async ({ context, baseURL }, use) => {
@@ -41,23 +43,27 @@ export const test = base.extend<ixsFixtures>({
     await use(metamaskContextPage);
   },
 
-  metamaskPage: async ({ context }, use) => {
+  metamaskPage: [async ({ context }, use) => {
     const pageWithMetamask = await context.pages()[1];
     const metamaskPage = new MetamaskPage(pageWithMetamask);
 
     await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD);
     await use(metamaskPage);
-  },
+  }, { auto: true }],
 
   connectWalletScreen: async ({ page, context }, use) => {
     await use(new ConnectWalletScreen(page, context));
+  },
+
+  topNavigationBar: async ({ page, context }, use) => {
+    await use(new TopNavigationBar(page, context));
   },
 
   webPage: async ({ page, context }, use) => {
     await use(new WebPage(page, context));
   },
 
-  kycScreen: async ({ connectWalletScreen, metamaskPage, page }, use) => {
+  kycScreen: async ({ connectWalletScreen, page }, use) => {
     await connectWalletScreen.connectMetaMask();
     await use(new KycScreen(page));
   },
