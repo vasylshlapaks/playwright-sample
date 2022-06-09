@@ -1,11 +1,12 @@
 import {test as base, chromium} from '@playwright/test';
-import {ConnectWalletPage} from "../page-object/connectWalletPage";
+import {ConnectWalletScreen} from "../page-object/connectWalletScreen";
+import {KycScreen} from "../page-object/kycScreen"
 import {MetamaskPage} from "../page-object/metamaskPage";
 import {WebPage} from "../page-object/webPage";
 
 type ixsFixtures = {
-  connectWalletPage: ConnectWalletPage;
-  connectedWalletPage: ConnectWalletPage;
+  connectWalletScreen: ConnectWalletScreen;
+  kycScreen: KycScreen;
   metamaskPage: MetamaskPage,
   webPage: WebPage
 };
@@ -45,21 +46,19 @@ export const test = base.extend<ixsFixtures>({
     const metamaskPage = new MetamaskPage(pageWithMetamask);
 
     await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD);
-
     await use(metamaskPage);
   },
 
-  connectWalletPage: async ({ page, context }, use) => {
-    await use(new ConnectWalletPage(page, context));
+  connectWalletScreen: async ({ page, context }, use) => {
+    await use(new ConnectWalletScreen(page, context));
   },
 
   webPage: async ({ page, context }, use) => {
     await use(new WebPage(page, context));
   },
 
-  connectedWalletPage: async ({ connectWalletPage, metamaskPage }, use) => {
-    await connectWalletPage.connectMetaMask();
-
-    await use(connectWalletPage);
+  kycScreen: async ({ connectWalletScreen, metamaskPage, page }, use) => {
+    await connectWalletScreen.connectMetaMask();
+    await use(new KycScreen(page));
   },
 });
