@@ -29,9 +29,14 @@ export class WebPage {
     await fileChooser.setFiles(filePath);
   }
 
-  async assertElementScreenshotMatchToSnapshot(element: Locator, snapshotName: string) {
+  async assertElementScreenshotMatchToSnapshot(element: Locator) {
     await this.page.waitForTimeout(2000);
-    expect(await element.screenshot()).toMatchSnapshot(snapshotName);
+    expect(await element.screenshot()).toMatchSnapshot();
+  }
+
+  async assertPageScreenshotMatchToSnapshot(page: Page) {
+    await this.page.waitForTimeout(2000);
+    expect(await page.screenshot()).toMatchSnapshot();
   }
 
   async openNewPageBy(click: Promise<void>) {
