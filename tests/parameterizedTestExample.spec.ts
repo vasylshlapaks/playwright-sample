@@ -12,7 +12,6 @@ test.describe('Check that the fields are required', () => {
   for (const user of users) {
     test(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ page, kycScreen }) => {
       await kycScreen.passKycAsIndividualButton.click();
-
       await kycScreen.nameField.fill(user.name);
       await kycScreen.lastNameField.fill(user.lastName);
     });
