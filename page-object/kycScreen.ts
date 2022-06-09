@@ -8,6 +8,9 @@ export class KycScreen extends WebPage {
   readonly lastNameField: Locator;
   readonly emailAddressField: Locator;
   readonly submitFormButton: Locator;
+  readonly invalidEmailError: Locator;
+
+  invalidEmailErrorText = 'Invalid email';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -15,6 +18,7 @@ export class KycScreen extends WebPage {
     this.nameField = page.locator('(//input)[1]');
     this.lastNameField = page.locator('(//input)[2]');
     this.emailAddressField = page.locator('(//input)[9]');
-    this.submitFormButton = page.locator('button[type="submit"]')
+    this.submitFormButton = page.locator('button[type="submit"]');
+    this.invalidEmailError = page.locator(`text="${this.invalidEmailErrorText}"`)
   }
 }
