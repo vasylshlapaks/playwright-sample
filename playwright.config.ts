@@ -26,7 +26,7 @@ const config: PlaywrightTestConfig = {
       maxDiffPixels: 30
     }
   },
-  snapshotDir: 'snapshots',
+  snapshotDir: 'testData/snapshots',
 };
 
 export default config;
