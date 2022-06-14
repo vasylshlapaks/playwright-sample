@@ -15,7 +15,7 @@ type ixsFixtures = {
 
 export const test = base.extend<ixsFixtures>({
   context: async ({ browser }, use) => {
-    const pathToExtension = require('path').join(__dirname, '..', 'extensions/metamaskFiles-master');
+    const pathToExtension = require('path').join(__dirname, '..', 'extensions/metamask');
     const userDataDir = '';
 
     const browserContext = await chromium.launchPersistentContext(userDataDir,{

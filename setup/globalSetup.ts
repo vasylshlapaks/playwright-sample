@@ -3,7 +3,7 @@ import * as fs from "fs";
 require('dotenv').config();
 
 const pathToDownloadMetamask = './extensions/metamask.zip';
-const pathToExtractedMetamask = './extensions/metamaskFiles-master';
+const pathToExtractedMetamask = './extensions/metamask';
 
 async function globalSetup() {
   let metamaskExists = await fs.existsSync(pathToExtractedMetamask);
