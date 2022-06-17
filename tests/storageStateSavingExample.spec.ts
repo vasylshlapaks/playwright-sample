@@ -1,15 +1,13 @@
-import { expect } from '@playwright/test';
-import { test } from '../fixtures/baseFixture';
+import { expect, test } from '@playwright/test';
 
-test.describe('Check connection of wallet', () => {
+test.describe('Check using of storage state', () => {
   test.use({storageState: './testData/storageState/loggedInState.json'});
-  const magentoStoreUrl = 'https://magento2-b2b.magebit.com/customer/account/';
+  const storeUrl = 'https://www.demoblaze.com/index.html';
 
-  test(`Check the ability to connect Metamask`, async ({ context }) => {
-    const storePage = await context.newPage();
-    const changePasswordButton = storePage.locator('[class="action change-password"]');
+  test(`Check the ability to use storage state`, async ({ page }) => {
+    const logoutButton = page.locator('#logout2');
 
-    await storePage.goto(magentoStoreUrl);
-    await expect(changePasswordButton).toBeVisible();
+    await page.goto(storeUrl);
+    await expect(logoutButton).toBeVisible();
   });
 });
