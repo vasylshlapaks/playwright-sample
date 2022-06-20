@@ -1,8 +1,8 @@
-import {WebPage} from "./webPage";
-import {Locator, Page, BrowserContext, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
-export class MetamaskPage extends WebPage{
-  readonly context: BrowserContext;
+// Example of storing selectors separately
+
+export class MetamaskPageElements {
   readonly nextButton: Locator;
   readonly iAmNewButton: Locator;
   readonly passwordFieldTest: Locator;
@@ -23,9 +23,7 @@ export class MetamaskPage extends WebPage{
   readonly accountDetailsMenuButton: Locator;
   readonly endOfFlowEmoji: Locator;
 
-  constructor(page: Page, context?: BrowserContext) {
-    super(page);
-    this.context = context;
+  constructor(page: Page) {
     this.confirmButton = page.locator('button');
     this.nextButton = page.locator('(//button)[1]');
     this.iAmNewButton = this.nextButton;
@@ -45,39 +43,5 @@ export class MetamaskPage extends WebPage{
     this.optionMenuButton = page.locator('[data-testid="account-options-menu-button"]');
     this.accountDetailsMenuButton = page.locator('[data-testid="account-options-menu__account-details"]');
     this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]')
-  }
-
-  async enterRecoveryPhrase(recoveryPhrase: string) {
-    const arrayOfWords = recoveryPhrase.split(" ");
-    const listOfFields = await this.secretWord.elementHandles();
-
-    for (let i=0; i<listOfFields.length; i++) {
-      await listOfFields[i].fill(arrayOfWords[i]);
-    }
-  }
-
-  async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
-    // proceed to recovery phrase
-    await this.confirmButton.click();
-    await this.iAmNewButton.click();
-    await this.nextButton.click();
-
-    // enter recovery phrase and password
-    await this.enterRecoveryPhrase(recoveryPhrase);
-    await this.passwordField.fill(password);
-    await this.confirmPasswordField.fill(password);
-    await this.createNewWalletCheckbox.click();
-    await this.confirmButton.click();
-    await expect(this.endOfFlowEmoji).toBeVisible();
-    await this.page.waitForTimeout(3000);
-
-    // open wallet and close info pop-up
-    await this.confirmButton.click();
-    await this.closeInfoPopUp.click();
-  }
-
-  async openAccountDetails() {
-    await this.optionMenuButton.click();
-    await this.accountDetailsMenuButton.click();
   }
 }
