@@ -1,0 +1,35 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.22.0-focal
+    steps:
+      - checkout
+      - run:
+          name: "Install dependencies"
+          command: npm install
+      - run:
+          name: "Run tests"
+          command: npm run ci-test
+          no_output_timeout: 15m
+      - store_artifacts:
+          path: ./test-results
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test
+
+  # example of scheduled job
+  regular_build:
+    triggers:
+      - schedule:
+          cron: "0 6 * 3 *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - test
