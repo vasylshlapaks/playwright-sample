@@ -12,6 +12,13 @@ export class MetamaskPage extends WebPage {
     this.context = context;
   }
 
+  async makeSureMetamaskLoaded() {
+    await this.metamaskElements.confirmButton.waitFor()
+      .catch(async () => {
+        await this.reloadPage();
+      });
+  }
+
   async enterRecoveryPhrase(recoveryPhrase: string) {
     const arrayOfWords = recoveryPhrase.split(" ");
     const listOfFields = await this.metamaskElements.secretWord.elementHandles();

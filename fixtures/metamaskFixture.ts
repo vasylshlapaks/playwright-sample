@@ -47,6 +47,7 @@ export const test = base.extend<ixsFixtures>({
     const pageWithMetamask = await context.pages()[1];
     const metamaskPage = new MetamaskPage(pageWithMetamask);
 
+    await metamaskPage.makeSureMetamaskLoaded();
     await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD);
     await use(metamaskPage);
   }, { auto: true }],

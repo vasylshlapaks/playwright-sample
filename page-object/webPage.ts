@@ -39,19 +39,19 @@ export class WebPage {
     expect(await page.screenshot()).toMatchSnapshot();
   }
 
-  async openNewPageBy(click: Promise<void>) {
+  async openNewPageByClick(page: Page, element: string) {
     const [newPage] = await Promise.all([
       this.context.waitForEvent('page'),
-      click
+      page.click(element)
     ]);
     await newPage.waitForLoadState();
     return newPage;
   }
 
-  async openNewPopUpBy(click: Promise<void>) {
+  async openNewPopUpBy(page: Page, element: string) {
     const [newPopUp] = await Promise.all([
       this.page.waitForEvent('popup'),
-      click
+      page.click(element)
     ]);
     await newPopUp.waitForLoadState();
     return newPopUp;
