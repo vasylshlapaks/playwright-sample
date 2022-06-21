@@ -22,6 +22,9 @@ export class MetamaskPage extends WebPage{
   }
 
   async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
+    if (!recoveryPhrase) throw new Error('Recovery phrase for Metamask is not set');
+    if (!password) throw new Error('Password for Metamask is not set');
+
     // proceed to recovery phrase
     await this.metamaskElements.confirmButton.click();
     await this.metamaskElements.iAmNewButton.click();
