@@ -7,6 +7,7 @@ export class ConnectWalletScreen extends WebPage {
   readonly connectViaMetamaskButton: Locator;
   readonly metamaskPage: MetamaskPage;
   readonly connectedStatusButton: Locator;
+  readonly helpPopUpButton: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -14,6 +15,7 @@ export class ConnectWalletScreen extends WebPage {
     this.connectWalletButton = page.locator('button:text("Connect Wallet")');
     this.connectViaMetamaskButton = page.locator('[id="connect-METAMASK"]');
     this.connectedStatusButton = page.locator('[id="web3-status-connected"]');
+    this.helpPopUpButton = page.locator('[data-testid="launcher"]')
   }
 
   async connectMetaMask() {
