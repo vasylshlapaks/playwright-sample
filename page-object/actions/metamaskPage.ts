@@ -2,7 +2,7 @@ import {WebPage} from "../webPage";
 import {Page, BrowserContext, expect} from '@playwright/test';
 import {MetamaskPageElements} from "../elements/metamaskPageElements";
 
-export class MetamaskPage extends WebPage{
+export class MetamaskPage extends WebPage {
   readonly context: BrowserContext;
   readonly metamaskElements: MetamaskPageElements;
 
