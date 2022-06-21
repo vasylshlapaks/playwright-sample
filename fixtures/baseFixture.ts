@@ -1,7 +1,7 @@
 import {test as base} from '@playwright/test';
 import {ConnectWalletScreen} from "../page-object/connectWalletScreen";
 import {KycScreen} from "../page-object/kycScreen"
-import {MetamaskPage} from "../page-object/metamaskPage";
+import {MetamaskPage} from "../page-object/actions/metamaskPage";
 import {WebPage} from "../page-object/webPage";
 import {TopNavigationBar} from "../page-object/topNavigationBar";
 
