@@ -1,6 +1,5 @@
 import {WebPage} from "./webPage";
 import { Locator, Page, BrowserContext} from '@playwright/test';
-import {MetamaskPage} from "./metamaskPage";
 
 export class KycScreen extends WebPage {
   readonly passKycAsIndividualButton: Locator;
