@@ -6,6 +6,7 @@ test.describe('Checking adding of init script to page', () => {
   });
 
   test('Check that the script was added to page', async ({ page, webPage }) => {
-      await webPage.waitForOpenPagesNumber(2);
+    await page.reload();
+    await webPage.waitForOpenPagesNumber(2);
   });
 });
