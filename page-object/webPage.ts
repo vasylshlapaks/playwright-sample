@@ -39,13 +39,36 @@ export class WebPage {
     expect(await page.screenshot()).toMatchSnapshot();
   }
 
-  async openNewPageByClick(page: Page, element: string) {
-    const [newPage] = await Promise.all([
-      this.context.waitForEvent('page'),
-      page.click(element)
-    ]);
+  async newPageHandle(page: Page, element: string, replacingPage: boolean = false) {
+    let indexOfPageToBeReturned;
+    const numberOfPagesBeforeNewPage = await this.context.pages().length;
+
+    await page.click(element);
+
+    if (replacingPage) {
+      indexOfPageToBeReturned = numberOfPagesBeforeNewPage - 1; // array of pages returned starting from 0
+
+      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage - 1);
+      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage);
+    } else {
+      indexOfPageToBeReturned = numberOfPagesBeforeNewPage;
+
+      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage + 1);
+    }
+
+    const newPage = this.context.pages()[indexOfPageToBeReturned];
+
+    if(!newPage) throw new Error('New page was not opened');
     await newPage.waitForLoadState();
     return newPage;
+  }
+
+  async openNewPageByClick(page: Page, element: string) {
+    return await this.newPageHandle(page, element)
+  }
+
+  async openAndReplacePageByClick(page: Page, element: string) {
+    return await this.newPageHandle(page, element, true)
   }
 
   async openNewPopUpBy(page: Page, element: string) {
@@ -69,7 +92,7 @@ export class WebPage {
 
       setTimeout(() => {
         clearInterval(intervalId);
-        return reject(new Error(`Opened pages number doesn't match to expected - ${expectedNumber}`));
+        return reject(new Error(`Expected opened pages number to be: ${expectedNumber} but got: ${this.context.pages().length} ${this.context.pages()}`));
       }, config.expect.timeout);
     })
   }
