@@ -63,12 +63,17 @@ export class WebPage {
     return newPage;
   }
 
-  async openNewPageByClick(page: Page, element: string) {
-    return await this.newPageHandle(page, element)
-  }
-
   async openAndReplacePageByClick(page: Page, element: string) {
     return await this.newPageHandle(page, element, true)
+  }
+
+  async openNewPageByClick(page: Page, element: string) {
+    const [newPage] = await Promise.all([
+      this.context.waitForEvent('page'),
+      setTimeout(() => page.click(element), 1000)
+    ]);
+    await newPage.waitForLoadState();
+    return newPage;
   }
 
   async openNewPopUpBy(page: Page, element: string) {
