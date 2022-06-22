@@ -1,5 +1,6 @@
 import {BrowserContext, expect, Locator, Page} from '@playwright/test';
 import config from "../playwright.config";
+import {timeouts} from "../helpers/timeouts";
 
 export class WebPage {
   readonly page: Page;
@@ -70,7 +71,7 @@ export class WebPage {
   async openNewPageByClick(page: Page, element: string) {
     const [newPage] = await Promise.all([
       this.context.waitForEvent('page'),
-      setTimeout(() => page.click(element), 1000)
+      setTimeout(() => page.click(element), timeouts.tinyTimeout)
     ]);
     await newPage.waitForLoadState();
     return newPage;
