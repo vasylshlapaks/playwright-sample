@@ -1,6 +1,7 @@
 import {WebPage} from "../webPage";
 import {Page, BrowserContext, expect} from '@playwright/test';
 import {MetamaskPageElements} from "../elements/metamaskPageElements";
+import {timeouts} from "../../helpers/timeouts";
 
 export class MetamaskPage extends WebPage {
   readonly context: BrowserContext;
@@ -13,7 +14,7 @@ export class MetamaskPage extends WebPage {
   }
 
   async makeSureMetamaskLoaded() {
-    await this.metamaskElements.confirmButton.waitFor()
+    await this.metamaskElements.confirmButton.waitFor({timeout: timeouts.shortTimeout})
       .catch(async () => {
         await this.reloadPage();
       });
@@ -44,7 +45,7 @@ export class MetamaskPage extends WebPage {
     await this.metamaskElements.createNewWalletCheckbox.click();
     await this.metamaskElements.confirmButton.click();
     await expect(this.metamaskElements.endOfFlowEmoji).toBeVisible();
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForTimeout(timeouts.tinyTimeout);
 
     // open wallet and close info pop-up
     await this.metamaskElements.confirmButton.click();
