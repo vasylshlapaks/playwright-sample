@@ -67,6 +67,8 @@ export class MetamaskPage extends WebPage {
   }
 
   async connectAndSignMetamask(openedMetamaskPage: Page) {
+    const numberOfPagesBeforeSign = await this.context.pages().length;
+
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
@@ -78,5 +80,8 @@ export class MetamaskPage extends WebPage {
 
       openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton),
     ]);
+
+    const numberOfPagesAfterSign = await this.context.pages().length;
+    await expect(numberOfPagesAfterSign).toBe(numberOfPagesBeforeSign - 1);
   }
 }
