@@ -4,7 +4,7 @@ import { test } from '../fixtures/baseFixture';
 import {metamaskWallet} from "../helpers/web3/metamaskData";
 
 test.describe('Check sending of crypto via web3', () => {
-  test.skip(`Check sending of kova via web3`, async ({ page }) => {
+  test(`Check sending of kova via web3`, async ({ page }) => {
     const web3 = new Web3Helpers();
     const secondWallet = '0xe2943d1fc805bea8b8b39f3a5c0e1e53ba8c945a';
     const valueToSend = 0.00001;
