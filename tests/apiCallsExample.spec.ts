@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import {addUser, getUsersList} from "../helpers/api/helpers";
 
-test.describe('GET and POST requests example', () => {
+test.describe.skip('GET and POST requests example', () => {
   test('Test ability to get request', async ({}) => {
     const emailOfUser = 'george.edwards@reqres.in';
     const usersList = await getUsersList();

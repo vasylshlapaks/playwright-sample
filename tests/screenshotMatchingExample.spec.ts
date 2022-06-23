@@ -1,6 +1,6 @@
 import { test } from '../fixtures/metamaskFixture';
 
-test.describe('Check UI matching of elements', () => {
+test.describe.skip('Check UI matching of elements', () => {
   test(`Check snapshot of single element`, async ({ page, connectWalletScreen, webPage }) => {
     await connectWalletScreen.connectWalletButton.click();
 
