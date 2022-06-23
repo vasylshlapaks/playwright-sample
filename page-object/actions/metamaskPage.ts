@@ -58,34 +58,25 @@ export class MetamaskPage extends WebPage {
     await this.metamaskElements.accountDetailsMenuButton.click();
   }
 
+  async signMetamask(page: Page) {
+    const signButton = page.locator(this.metamaskElements.signMetamaskRequestPopUpButton);
+
+    await page.waitForTimeout(timeouts.tinyTimeout);
+    await signButton.click();
+    await page.waitForEvent('close')
+  }
+
   async connectAndSignMetamask(openedMetamaskPage: Page) {
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
-          console.log('then');
-          console.log(this.context.pages().length);
-          const signButton = page.locator(this.metamaskElements.signMetamaskRequestPopUpButton);
-
-          await signButton.click();
-          await page.waitForEvent('close')
-          console.log('after close then');
-          console.log(this.context.pages().length);
+          await this.signMetamask(page);
         })
         .catch(async () => {
-          console.log('catch');
-          console.log(this.context.pages().length);
-          const signButton = openedMetamaskPage.locator(this.metamaskElements.signMetamaskRequestPopUpButton);
-
-          await signButton.click();
-          await openedMetamaskPage.waitForEvent('close')
-          console.log('after close catch');
-          console.log(this.context.pages().length);
+          await this.signMetamask(openedMetamaskPage);
         }),
-      openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton),
-      console.log('during promise' + this.context.pages().length),
-      console.log('during promise' + this.context.pages().length),
-      console.log('during promise' + this.context.pages().length)
 
+      openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton),
     ]);
   }
 }
