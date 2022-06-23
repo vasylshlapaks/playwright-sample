@@ -10,7 +10,8 @@ test.describe('Check that the fields are required', () => {
   const invalidEmails = [' ', 'asdads@msadf'];
 
   for (const user of users) {
-    test(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ page, kycScreen }) => {
+    test(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ page, kycScreen, context }) => {
+      console.log(context.pages().length);
       await kycScreen.passKycAsIndividualButton.click();
       await kycScreen.nameField.fill(user.name);
       await kycScreen.lastNameField.fill(user.lastName);
