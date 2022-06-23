@@ -30,14 +30,25 @@ export class MetamaskPage extends WebPage {
     }
   }
 
+
+  async proceedToRecoveryPhrase() {
+    await this.metamaskElements.confirmButton.click();
+    await this.metamaskElements.iAmNewButton.click();
+    await this.metamaskElements.nextButton.click();
+
+    await expect(this.metamaskElements.passwordField).toBeVisible()
+      .catch(async () => {
+        await this.metamaskElements.confirmButton.click();
+        await this.metamaskElements.iAmNewButton.click();
+        await this.metamaskElements.nextButton.click();
+      })
+  }
+
   async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
     if (!recoveryPhrase) throw new Error('Recovery phrase for Metamask is not set');
     if (!password) throw new Error('Password for Metamask is not set');
 
-    // proceed to recovery phrase
-    await this.metamaskElements.confirmButton.click();
-    await this.metamaskElements.iAmNewButton.click();
-    await this.metamaskElements.nextButton.click();
+    await this.proceedToRecoveryPhrase();
 
     // enter recovery phrase and password
     await this.enterRecoveryPhrase(recoveryPhrase);
