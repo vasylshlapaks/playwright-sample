@@ -8,7 +8,7 @@ export class MetamaskPage extends WebPage {
   readonly metamaskElements: MetamaskPageElements;
 
   constructor(page: Page, context?: BrowserContext) {
-    super(page);
+    super(page, context);
     this.metamaskElements = new MetamaskPageElements(page);
     this.context = context;
   }
@@ -55,5 +55,18 @@ export class MetamaskPage extends WebPage {
   async openAccountDetails() {
     await this.metamaskElements.optionMenuButton.click();
     await this.metamaskElements.accountDetailsMenuButton.click();
+  }
+
+  async connectAndSignMetamask(openedMetamaskPage: Page) {
+    await Promise.all([
+      this.context.waitForEvent('page')
+        .then(async (page) => {
+          await page.click(this.metamaskElements.signMetamaskRequestPopUpButton)
+        })
+        .catch(async () => {
+          await openedMetamaskPage.click(this.metamaskElements.signMetamaskRequestPopUpButton)
+        }),
+      openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton)
+    ]);
   }
 }

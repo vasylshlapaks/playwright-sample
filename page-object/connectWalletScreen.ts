@@ -13,7 +13,7 @@ export class ConnectWalletScreen extends WebPage {
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
-    this.metamaskPage = new MetamaskPage(page);
+    this.metamaskPage = new MetamaskPage(page, context);
     this.connectWalletButton = page.locator('button:text("Connect Wallet")');
     this.connectViaMetamaskButton = page.locator(this.connectViaMetamaskButtonSelector);
     this.connectedStatusButton = page.locator('[id="web3-status-connected"]');
@@ -22,13 +22,9 @@ export class ConnectWalletScreen extends WebPage {
 
   async connectMetaMask() {
     await this.connectWalletButton.click();
-
-    await this.page.waitForTimeout(timeouts.tinyTimeout);
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
-    await this.page.waitForTimeout(timeouts.tinyTimeout);
-    const metamaskSignPopUpPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
-    await metamaskSignPopUpPage.click(this.metamaskPage.metamaskElements.signMetamaskRequestPopUpButton);
+    await this.metamaskPage.connectAndSignMetamask(metamaskPopUpPage);
   }
 }
