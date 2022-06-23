@@ -70,7 +70,7 @@ export class WebPage {
 
   async openNewPageByClick(page: Page, element: string) {
     const [newPage] = await Promise.all([
-      this.context.waitForEvent('page').catch((error)=> { throw new Error (`${error} + ${this.context.pages().length}`)}),
+      this.context.waitForEvent('page'),
       setTimeout(() => page.click(element), timeouts.tinyTimeout)
     ]);
     await newPage.waitForLoadState();
