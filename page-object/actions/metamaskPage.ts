@@ -17,6 +17,7 @@ export class MetamaskPage extends WebPage {
     await this.metamaskElements.confirmButton.waitFor({timeout: timeouts.shortTimeout})
       .catch(async () => {
         await this.reloadPage();
+        await this.page.waitForTimeout(timeouts.tinyTimeout)
       });
   }
 
