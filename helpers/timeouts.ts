@@ -3,6 +3,6 @@ export const timeouts = {
   testTimeout: 210000,
   tinyTimeout: 2000,
   shortTimeout: 10000,
-  mediumTimeout: 35000,
-  longTimeout: 50000
+  mediumTimeout: 45000,
+  longTimeout: 60000
 };
