@@ -1,5 +1,5 @@
 import {WebPage} from "./webPage";
-import { Locator, Page, BrowserContext} from '@playwright/test';
+import {Locator, Page, BrowserContext, expect} from '@playwright/test';
 import {MetamaskPage} from "./actions/metamaskPage";
 import {timeouts} from "../helpers/timeouts";
 
@@ -26,5 +26,6 @@ export class ConnectWalletScreen extends WebPage {
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
     await this.metamaskPage.connectAndSignMetamask(metamaskPopUpPage);
+    await expect(this.connectedStatusButton).toBeVisible();
   }
 }

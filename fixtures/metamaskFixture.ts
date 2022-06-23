@@ -66,7 +66,6 @@ export const test = base.extend<ixsFixtures>({
 
   kycScreen: async ({ connectWalletScreen, page }, use) => {
     await connectWalletScreen.connectMetaMask();
-    await expect(connectWalletScreen.connectedStatusButton).toBeVisible();
 
     await use(new KycScreen(page));
   },
