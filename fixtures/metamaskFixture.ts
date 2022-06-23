@@ -1,4 +1,4 @@
-import {test as base, chromium} from '@playwright/test';
+import {test as base, chromium, expect} from '@playwright/test';
 import {ConnectWalletScreen} from "../page-object/connectWalletScreen";
 import {KycScreen} from "../page-object/kycScreen"
 import {MetamaskPage} from "../page-object/actions/metamaskPage";
@@ -66,6 +66,8 @@ export const test = base.extend<ixsFixtures>({
 
   kycScreen: async ({ connectWalletScreen, page }, use) => {
     await connectWalletScreen.connectMetaMask();
+    await expect(connectWalletScreen.connectedStatusButton).toBeVisible();
+
     await use(new KycScreen(page));
   },
 });
