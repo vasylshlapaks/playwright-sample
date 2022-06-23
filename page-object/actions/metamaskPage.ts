@@ -61,16 +61,24 @@ export class MetamaskPage extends WebPage {
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
+          console.log('then');
+          console.log(this.context.pages().length);
           const signButton = page.locator(this.metamaskElements.signMetamaskRequestPopUpButton);
 
           await signButton.click();
           await page.waitForEvent('close')
+          console.log('after close then');
+          console.log(this.context.pages().length);
         })
         .catch(async () => {
+          console.log('catch');
+          console.log(this.context.pages().length);
           const signButton = openedMetamaskPage.locator(this.metamaskElements.signMetamaskRequestPopUpButton);
 
           await signButton.click();
           await openedMetamaskPage.waitForEvent('close')
+          console.log('after close catch');
+          console.log(this.context.pages().length);
         }),
       openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton)
     ]);
