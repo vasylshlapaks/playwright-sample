@@ -61,9 +61,11 @@ export class MetamaskPage extends WebPage {
     await Promise.all([
       this.context.waitForEvent('page')
         .then(async (page) => {
+          console.log('then')
           await page.click(this.metamaskElements.signMetamaskRequestPopUpButton)
         })
         .catch(async () => {
+          console.log('catch')
           await openedMetamaskPage.click(this.metamaskElements.signMetamaskRequestPopUpButton)
         }),
       openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton)
