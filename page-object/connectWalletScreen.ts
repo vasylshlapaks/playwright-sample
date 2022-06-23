@@ -20,11 +20,18 @@ export class ConnectWalletScreen extends WebPage {
   }
 
   async connectMetaMask() {
+    console.log(this.context.pages().length);
     await this.connectWalletButton.click();
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
+    await this.page.waitForTimeout(2000);
+    console.log(this.context.pages().length);
 
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
+    await this.page.waitForTimeout(2000);
+    console.log(this.context.pages().length);
     const metamaskSignPopUpPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
+    await this.page.waitForTimeout(2000);
+    console.log(this.context.pages().length);
     await metamaskSignPopUpPage.click(this.metamaskPage.metamaskElements.signMetamaskRequestPopUpButton);
   }
 }
