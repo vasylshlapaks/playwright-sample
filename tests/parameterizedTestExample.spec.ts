@@ -19,6 +19,7 @@ test.describe('Check that the fields are required', () => {
 
   for (const email of invalidEmails) {
     test(`Check the ability to pass KYC with "${email}" email`, async ({ page, kycScreen }) => {
+      await page.waitForTimeout(8000);
       await kycScreen.passKycAsIndividualButton.click();
       await kycScreen.emailAddressField.fill(email);
       await kycScreen.submitFormButton.click();
