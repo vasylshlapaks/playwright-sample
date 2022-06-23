@@ -80,7 +80,11 @@ export class MetamaskPage extends WebPage {
           console.log('after close catch');
           console.log(this.context.pages().length);
         }),
-      openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton)
+      openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton),
+      console.log('during promise' + this.context.pages().length),
+      console.log('during promise' + this.context.pages().length),
+      console.log('during promise' + this.context.pages().length)
+
     ]);
   }
 }
