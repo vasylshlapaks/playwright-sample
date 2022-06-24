@@ -76,23 +76,4 @@ export class MetamaskPage extends WebPage {
     await signButton.click();
     await page.waitForEvent('close')
   }
-
-  async connectAndSignMetamask(openedMetamaskPage: Page) {
-    const numberOfPagesBeforeSign = await this.context.pages().length;
-
-    await Promise.all([
-      this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
-        .then(async (page) => {
-          await this.signMetamask(page);
-        })
-        .catch(async () => {
-          await this.signMetamask(openedMetamaskPage);
-        }),
-
-      openedMetamaskPage.click(this.metamaskElements.connectMetamaskPopUpButton),
-    ]);
-
-    const numberOfPagesAfterSign = await this.context.pages().length;
-    await expect(numberOfPagesAfterSign).toBe(numberOfPagesBeforeSign - 1);
-  }
 }

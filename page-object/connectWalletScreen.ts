@@ -20,12 +20,39 @@ export class ConnectWalletScreen extends WebPage {
     this.helpPopUpButton = page.locator('[data-testid="launcher"]')
   }
 
+  async connectAndSignMetamask(openedMetamaskPage: Page) {
+    const numberOfPagesBeforeSign = await this.context.pages().length;
+
+    await Promise.all([
+      this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
+        .then(async (page) => {
+          await page.close();
+          await this.page.reload();
+
+          const newPage = await this.context.waitForEvent('page', {timeout: timeouts.shortTimeout});
+          await this.metamaskPage.signMetamask(newPage);
+        })
+        .catch(async () => {
+          await openedMetamaskPage.close();
+          await this.page.reload();
+
+          const newPage = await this.context.waitForEvent('page', {timeout: timeouts.shortTimeout});
+          await this.metamaskPage.signMetamask(newPage);
+        }),
+
+      openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
+    ]);
+
+    const numberOfPagesAfterSign = await this.context.pages().length;
+    await expect(numberOfPagesAfterSign).toBe(numberOfPagesBeforeSign - 1);
+  }
+
   async connectMetaMask() {
     await this.connectWalletButton.click();
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
-    await this.metamaskPage.connectAndSignMetamask(metamaskPopUpPage);
+    await this.connectAndSignMetamask(metamaskPopUpPage);
     await expect(this.connectedStatusButton).toBeVisible();
   }
 }
