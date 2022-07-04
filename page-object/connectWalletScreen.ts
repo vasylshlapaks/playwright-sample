@@ -27,7 +27,7 @@ export class ConnectWalletScreen extends WebPage {
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
           await page.close();
-
+          console.log('then');
           const [signPage] = await Promise.all([
             this.context.waitForEvent('page', {timeout: timeouts.shortTimeout}),
             this.page.reload()
@@ -38,7 +38,7 @@ export class ConnectWalletScreen extends WebPage {
         })
         .catch(async () => {
           await openedMetamaskPage.close();
-
+          console.log('catch');
           const [signPage] = await Promise.all([
             this.context.waitForEvent('page', {timeout: timeouts.shortTimeout}),
             this.page.reload()
