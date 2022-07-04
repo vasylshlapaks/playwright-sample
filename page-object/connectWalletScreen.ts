@@ -26,6 +26,8 @@ export class ConnectWalletScreen extends WebPage {
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
+          console.log('then');
+          
           await page.waitForLoadState();
 
           await this.metamaskPage.signMetamask(page);
