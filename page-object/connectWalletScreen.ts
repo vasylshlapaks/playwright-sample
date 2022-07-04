@@ -21,13 +21,11 @@ export class ConnectWalletScreen extends WebPage {
   }
 
   async connectAndSignMetamask(openedMetamaskPage: Page) {
-    const numberOfPagesBeforeSign = await this.context.pages().length;
-
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
           console.log('then');
-          
+
           await page.waitForLoadState();
 
           await this.metamaskPage.signMetamask(page);
@@ -46,9 +44,6 @@ export class ConnectWalletScreen extends WebPage {
 
       openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
     ]);
-
-    const numberOfPagesAfterSign = await this.context.pages().length;
-    await expect(numberOfPagesAfterSign).toBe(numberOfPagesBeforeSign - 1);
   }
 
   async connectMetaMask() {
