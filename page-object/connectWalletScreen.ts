@@ -52,11 +52,11 @@ export class ConnectWalletScreen extends WebPage {
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
-    const signPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
+  //  const signPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
 
-  //  await this.connectAndSignMetamask(metamaskPopUpPage);
+    await this.connectAndSignMetamask(metamaskPopUpPage);
 
-    await signPage.click(this.metamaskPage.metamaskElements.signMetamaskRequestPopUpButton);
+ //   await signPage.click(this.metamaskPage.metamaskElements.signMetamaskRequestPopUpButton);
     await expect(this.connectedStatusButton).toBeVisible();
   }
 }
