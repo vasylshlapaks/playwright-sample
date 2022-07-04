@@ -26,6 +26,7 @@ export class ConnectWalletScreen extends WebPage {
         .then(async (page) => {
           console.log('then');
 
+          await page.waitForTimeout(6000);
           await page.waitForLoadState();
 
           await this.metamaskPage.signMetamask(page);
