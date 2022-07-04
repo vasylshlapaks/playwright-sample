@@ -49,7 +49,10 @@ export class ConnectWalletScreen extends WebPage {
 
   async connectMetaMask() {
     await this.connectWalletButton.click();
+    await this.page.waitForTimeout(5000);
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
+
+    await metamaskPopUpPage.waitForTimeout(5000);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
   //  const signPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
