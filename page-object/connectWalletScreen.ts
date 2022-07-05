@@ -25,9 +25,10 @@ export class ConnectWalletScreen extends WebPage {
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async (page) => {
           console.log('then');
-          await page.waitForLoadState();
 
-          await this.metamaskPage.signMetamask(page);
+          const signPage = this.context.pages()[3];
+
+          await this.metamaskPage.signMetamask(signPage);
         })
         .catch(async () => {
           console.log(this.context.pages().length);
