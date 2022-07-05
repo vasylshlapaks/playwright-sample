@@ -44,6 +44,8 @@ export class ConnectWalletScreen extends WebPage {
       openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
     ]);
 
+
+    await this.page.waitForTimeout(3000);
     await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout})
       .catch( async () => {
         console.log('catch 2');
