@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
   testDir: './tests',
   globalSetup: './setup/globalSetup.ts',
   outputDir: './test-results',
-  workers: 1,
+  workers: 3,
   use: {
     baseURL: process.env.E2E_URL || 'https://app.ixswap.io/',
     browserName: 'chromium',
