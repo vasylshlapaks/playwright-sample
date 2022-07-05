@@ -73,7 +73,10 @@ export class MetamaskPage extends WebPage {
     const signButton = page.locator(this.metamaskElements.signMetamaskRequestPopUpButton);
 
     await page.waitForTimeout(10000);
-    await signButton.click();
-    await page.waitForEvent('close')
+
+    await Promise.all([
+      page.waitForEvent('close'),
+      signButton.click()
+    ]);
   }
 }
