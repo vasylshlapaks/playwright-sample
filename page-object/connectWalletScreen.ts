@@ -45,15 +45,19 @@ export class ConnectWalletScreen extends WebPage {
     ]);
 
 
+    await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
     await this.page.waitForTimeout(3000);
-    await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout})
-      .catch( async () => {
-        console.log('catch 2');
 
-        const signPage = this.context.pages()[3];
+    const pages = this.context.pages().length;
 
-        await this.metamaskPage.signMetamask(signPage);
-      })
+    if (pages > 3) {
+      console.log('catch 2');
+
+      const signPage = this.context.pages()[3];
+
+      await this.metamaskPage.signMetamask(signPage);
+    };
+    
   }
 
 
