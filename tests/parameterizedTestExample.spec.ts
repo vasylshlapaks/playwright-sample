@@ -5,12 +5,12 @@ import { test } from '../fixtures/metamaskFixture';
 test.describe('Check that the fields are required', () => {
   const users = [
     { name: 'test', lastName: 'last'},
-   // { name: 'new', lastName: 'last new'}
+    { name: 'new', lastName: 'last new'}
   ];
   const invalidEmails = [' ', 'asdads@msadf'];
 
   for (const user of users) {
-    test.only(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ page, kycScreen, context }) => {
+    test(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ page, kycScreen, context }) => {
       await page.waitForTimeout(8000);
       console.log(context.pages().length);
       await kycScreen.passKycAsIndividualButton.click();
