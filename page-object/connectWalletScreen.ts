@@ -44,6 +44,55 @@ export class ConnectWalletScreen extends WebPage {
       openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
     ]);
 
+    await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
+    await this.page.waitForTimeout(5000);
+
+    const pages = this.context.pages().length;
+
+    if (pages > 3) {
+      console.log('catch 2');
+
+      const signPage = this.context.pages()[3];
+
+      await this.metamaskPage.signMetamask(signPage);
+    }
+
+    await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
+    await this.page.waitForTimeout(5000);
+
+    const newPages = this.context.pages().length;
+
+    if (pages > 3) {
+      console.log('catch 3');
+
+      const signPage = this.context.pages()[3];
+
+      await this.metamaskPage.signMetamask(signPage);
+    }
+  }
+
+  async connectAndSignMetamaskOlding(openedMetamaskPage: Page) {
+    await Promise.all([
+      this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
+        .then(async (page) => {
+          console.log('then');
+
+          const signPage = this.context.pages()[3];
+
+          await this.metamaskPage.signMetamask(signPage);
+        })
+        .catch(async () => {
+          console.log(this.context.pages().length);
+          console.log('catch');
+
+          const signPage = this.context.pages()[3];
+
+          await this.metamaskPage.signMetamask(signPage);
+        }),
+
+      openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
+    ]);
+
 
     await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
     await this.page.waitForTimeout(3000);
@@ -56,8 +105,7 @@ export class ConnectWalletScreen extends WebPage {
       const signPage = this.context.pages()[3];
 
       await this.metamaskPage.signMetamask(signPage);
-    };
-    
+    }
   }
 
 
@@ -90,10 +138,7 @@ export class ConnectWalletScreen extends WebPage {
 
   async connectMetaMask() {
     await this.connectWalletButton.click();
-    await this.page.waitForTimeout(5000);
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
-
-    await metamaskPopUpPage.waitForTimeout(5000);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
   //  const signPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
