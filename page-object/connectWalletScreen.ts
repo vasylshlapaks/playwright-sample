@@ -62,7 +62,7 @@ export class ConnectWalletScreen extends WebPage {
 
     const newPages = this.context.pages().length;
 
-    if (pages > 3) {
+    if (newPages > 3) {
       console.log('catch 3');
 
       const signPage = this.context.pages()[3];
