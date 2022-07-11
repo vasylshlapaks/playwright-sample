@@ -9,19 +9,21 @@ test.describe('Check that the fields are required', () => {
   ];
   const invalidEmails = [' ', 'asdads@msadf'];
 
+  test.beforeEach(async ({ kycScreen }) => {
+    await kycScreen.clickPassKycAsIndividualButton();
+  });
+
   for (const user of users) {
-    test(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ page, kycScreen, context }) => {
-      await kycScreen.passKycAsIndividualButton.click();
-      await kycScreen.nameField.fill(user.name);
-      await kycScreen.lastNameField.fill(user.lastName);
+    test(`Check the ability to pass KYC with "${user.name} ${user.lastName}" name`, async ({ kycScreen }) => {
+      await kycScreen.enterFirstName(user.name);
+      await kycScreen.enterLastName(user.lastName);
     });
   }
 
   for (const email of invalidEmails) {
-    test(`Check the ability to pass KYC with "${email}" email`, async ({ page, kycScreen, context }) => {
-      await kycScreen.passKycAsIndividualButton.click();
-      await kycScreen.emailAddressField.fill(email);
-      await kycScreen.submitFormButton.click();
+    test(`Check the ability to pass KYC with "${email}" email`, async ({ kycScreen }) => {
+      await kycScreen.enterEmail(email);
+      await kycScreen.clickSubmitFormButton();
 
       await expect(kycScreen.invalidEmailError).toBeVisible();
     });

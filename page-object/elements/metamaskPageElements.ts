@@ -1,6 +1,6 @@
 import {Locator, Page} from '@playwright/test';
 
-// Example of storing selectors separately
+// Example of storing selectors separately from actions
 
 export class MetamaskPageElements {
   readonly nextButton: Locator;

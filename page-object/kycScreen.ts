@@ -1,5 +1,5 @@
 import {WebPage} from "./webPage";
-import { Locator, Page, BrowserContext} from '@playwright/test';
+import {Locator, Page, BrowserContext, expect} from '@playwright/test';
 
 export class KycScreen extends WebPage {
   readonly passKycAsIndividualButton: Locator;
@@ -19,5 +19,25 @@ export class KycScreen extends WebPage {
     this.emailAddressField = page.locator('(//input)[9]');
     this.submitFormButton = page.locator('button[type="submit"]');
     this.invalidEmailError = page.locator(`text="${this.invalidEmailErrorText}"`)
+  }
+
+  async clickPassKycAsIndividualButton() {
+    await this.passKycAsIndividualButton.click();
+  }
+
+  async enterFirstName(firstName: string) {
+    await this.nameField.fill(firstName);
+  }
+
+  async enterLastName(lastName: string) {
+    await this.lastNameField.fill(lastName);
+  }
+
+  async enterEmail(email: string) {
+    await this.emailAddressField.fill(email);
+  }
+
+  async clickSubmitFormButton() {
+    await this.submitFormButton.click()
   }
 }
