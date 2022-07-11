@@ -22,28 +22,7 @@ export class ConnectWalletScreen extends WebPage {
     this.loaderIcon = page.locator('img[alt="Loading..."]')
   }
 
-  async connectAndSignMetamask(openedMetamaskPage: Page) {
-    await Promise.all([
-      this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
-        .then(async (page) => {
-          console.log('then');
-
-          const signPage = this.context.pages()[3];
-
-          await this.metamaskPage.signMetamask(signPage);
-        })
-        .catch(async () => {
-          console.log(this.context.pages().length);
-          console.log('catch');
-
-          const signPage = this.context.pages()[3];
-
-          await this.metamaskPage.signMetamask(signPage);
-        }),
-
-      openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
-    ]);
-
+  async signMetamaskConnectionIfRequestAppeared() {
     let triesLeft = 5;
 
     do {
@@ -53,8 +32,6 @@ export class ConnectWalletScreen extends WebPage {
       let pages = this.context.pages().length;
 
       if (pages > 3) {
-        console.log(`try - ${triesLeft}`);
-
         const signPage = this.context.pages()[3];
 
         await this.metamaskPage.signMetamask(signPage);
@@ -63,20 +40,15 @@ export class ConnectWalletScreen extends WebPage {
     } while (triesLeft);
   }
 
-  async connectAndSignMetamaskOlding(openedMetamaskPage: Page) {
+  async connectAndSignMetamask(openedMetamaskPage: Page) {
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
-        .then(async (page) => {
-          console.log('then');
-
+        .then(async () => {
           const signPage = this.context.pages()[3];
 
           await this.metamaskPage.signMetamask(signPage);
         })
         .catch(async () => {
-          console.log(this.context.pages().length);
-          console.log('catch');
-
           const signPage = this.context.pages()[3];
 
           await this.metamaskPage.signMetamask(signPage);
@@ -85,47 +57,7 @@ export class ConnectWalletScreen extends WebPage {
       openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
     ]);
 
-
-    await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
-    await this.page.waitForTimeout(3000);
-
-    const pages = this.context.pages().length;
-
-    if (pages > 3) {
-      console.log('catch 2');
-
-      const signPage = this.context.pages()[3];
-
-      await this.metamaskPage.signMetamask(signPage);
-    }
-  }
-
-
-  async connectAndSignMetamaskOld(openedMetamaskPage: Page) {
-    await Promise.all([
-      this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
-        .then(async (page) => {
-          console.log('then');
-
-          await page.waitForTimeout(6000);
-          await page.waitForLoadState();
-
-          await this.metamaskPage.signMetamask(page);
-        })
-        .catch(async () => {
-          await openedMetamaskPage.close();
-          console.log('catch');
-          const [signPage] = await Promise.all([
-            this.context.waitForEvent('page', {timeout: timeouts.shortTimeout}),
-            this.page.reload()
-          ]);
-          await signPage.waitForLoadState();
-
-          await this.metamaskPage.signMetamask(signPage);
-        }),
-
-      openedMetamaskPage.click(this.metamaskPage.metamaskElements.connectMetamaskPopUpButton),
-    ]);
+    await this.signMetamaskConnectionIfRequestAppeared();
   }
 
   async connectMetaMask() {
@@ -133,11 +65,8 @@ export class ConnectWalletScreen extends WebPage {
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
-  //  const signPage = await this.openNewPageByClick(metamaskPopUpPage, this.metamaskPage.metamaskElements.connectMetamaskPopUpButton);
-
     await this.connectAndSignMetamask(metamaskPopUpPage);
 
- //   await signPage.click(this.metamaskPage.metamaskElements.signMetamaskRequestPopUpButton);
     await expect(this.connectedStatusButton).toBeVisible();
   }
 }
