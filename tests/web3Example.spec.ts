@@ -12,6 +12,9 @@ test.describe('Check sending of crypto via web3', () => {
 
     await web3.sendCrypto(metamaskWallet, secondWallet, valueToSend);
 
-    await expect(parseFloat(await web3.getEthBalance(secondWallet))).toBeCloseTo(parseFloat(balanceOfSeccondWallet) + valueToSend, 5);
+    const ethBalanceOfWalletAfterTransaction = parseFloat(await web3.getEthBalance(secondWallet));
+    const expectedBalanceAfterTransaction = parseFloat(balanceOfSeccondWallet) + valueToSend;
+
+    await expect(ethBalanceOfWalletAfterTransaction).toBeCloseTo(expectedBalanceAfterTransaction, 5);
   });
 });

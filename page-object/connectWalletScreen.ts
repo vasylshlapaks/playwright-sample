@@ -22,6 +22,10 @@ export class ConnectWalletScreen extends WebPage {
     this.loaderIcon = page.locator('img[alt="Loading..."]')
   }
 
+  async clickConnectWalletButton() {
+    await this.connectWalletButton.click();
+  }
+
   /*
   Method checks if there are new sign requests and sign them
   this is needed for correct working of tests
@@ -67,7 +71,7 @@ export class ConnectWalletScreen extends WebPage {
   }
 
   async connectMetaMask() {
-    await this.connectWalletButton.click();
+    await this.clickConnectWalletButton();
     const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
     await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
