@@ -22,12 +22,18 @@ export class ConnectWalletScreen extends WebPage {
     this.loaderIcon = page.locator('img[alt="Loading..."]')
   }
 
+  /*
+  Method checks if there are new sign requests and sign them
+  this is needed for correct working of tests
+  when they are running in parallel
+  */
+
   async signMetamaskConnectionIfRequestAppeared() {
     let triesLeft = 5;
 
     do {
       await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
-      await this.page.waitForTimeout(5000);
+      await this.page.waitForTimeout(timeouts.timeoutForSignWindow);
 
       let pages = this.context.pages().length;
 
