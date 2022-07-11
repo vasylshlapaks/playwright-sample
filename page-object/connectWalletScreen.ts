@@ -39,11 +39,10 @@ export class ConnectWalletScreen extends WebPage {
       await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
       await this.page.waitForTimeout(timeouts.timeoutForSignWindow);
 
-      let pages = this.context.pages().length;
+      const pages = await this.context.pages().length;
 
       if (pages > 3) {
         const signPage = this.context.pages()[3];
-
         await this.metamaskPage.signMetamask(signPage);
       }
       triesLeft--
@@ -55,12 +54,10 @@ export class ConnectWalletScreen extends WebPage {
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
         .then(async () => {
           const signPage = this.context.pages()[3];
-
           await this.metamaskPage.signMetamask(signPage);
         })
         .catch(async () => {
           const signPage = this.context.pages()[3];
-
           await this.metamaskPage.signMetamask(signPage);
         }),
 
