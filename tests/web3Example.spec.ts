@@ -14,7 +14,6 @@ test.describe('Check sending of crypto via web3', () => {
 
     const ethBalanceOfWalletAfterTransaction = parseFloat(await web3.getEthBalance(secondWallet));
     const expectedBalanceAfterTransaction = parseFloat(balanceOfSeccondWallet) + valueToSend;
-
     await expect(ethBalanceOfWalletAfterTransaction).toBeCloseTo(expectedBalanceAfterTransaction, 5);
   });
 });
