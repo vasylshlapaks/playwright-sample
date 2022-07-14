@@ -19,7 +19,6 @@ export const test = base.extend<ixsFixtures>({
     const userDataDir = '';
 
     const browserContext = await chromium.launchPersistentContext(userDataDir,{
-      recordVideo: { dir: 'test-results/videos/' },
       headless: false,
       args: [
         `--disable-extensions-except=${pathToExtension}`,

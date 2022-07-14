@@ -1,4 +1,4 @@
-name: Integration Tests
+name: E2E Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   integration-tests:
-    name: Integration Tests
+    name: E2E Tests
     env:
       METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
       METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
