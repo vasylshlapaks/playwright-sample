@@ -1,0 +1,43 @@
+stages:
+  - test
+
+.test: &test
+  image: mcr.microsoft.com/playwright:v1.22.0-focal
+  cache:
+    - key:
+        files:
+          - package.json
+      paths:
+        - node_modules
+    - key:
+        files:
+          - package.json
+      paths:
+        - node_modules
+  script:
+    - npm install
+    - npm run start & npx wait-on http://localhost:3000
+    - cd tests/e2e && npx playwright install --with-deps
+    - npm run ci-test
+  artifacts:
+    name: "test-results-$CI_COMMIT_REF_NAME"
+    expire_in: 8 weeks
+    when: always
+    paths:
+      - test-results
+
+test dev:
+  stage: test
+  environment: dev
+  only:
+    - e2e-tests-dev
+  variables:
+    ENVIRONMENT: "dev"
+    MAIL7_API_KEY: $E2E_TESTS_MAIL7_API_KEY
+    MAIL7_API_SECRET: $E2E_TESTS_MAIL7_API_SECRET
+    USER_PASSWORD: $E2E_TESTS_USER_PASSWORD
+    METAMASK_RECOVERY: $E2E_TESTS_METAMASK_RECOVERY
+    METAMASK_PASSWORD: $E2E_TESTS_METAMASK_PASSWORD
+    ALGORAND_RECOVERY: $E2E_TESTS_ALGORAND_RECOVERY
+    ALGORAND_PASSWORD: $E2E_TESTS_ALGORAND_PASSWORD
+  <<: *test
