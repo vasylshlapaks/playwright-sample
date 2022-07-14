@@ -1,36 +1,43 @@
-# This is a basic workflow to help you get started with Actions
+name: Integration Tests
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "master" ]
+    branches:
+      - master
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  integration-tests:
+    name: Integration Tests
+    env:
+      METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
+      METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
+      METAMASK_PRIVATE_KEY: ${{ secrets.METAMASK_PRIVATE_KEY }}
+      INFURA_KEY: ${{ secrets.INFURA_KEY }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+      USER_ENCRYPTED_PASSWORD: ${{ secrets.USER_ENCRYPTED_PASSWORD }}
+      E2E_CI: true
+    runs-on: ubuntu-latest # or macos-latest, windows-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.17
+          registry-url: https://registry.npmjs.org
+      - name: Install dependencies
+        run: npm install
+      - name: Install Playwright dependencies
+        run: npx playwright install
+      - name: Run E2E tests
+        run: npm run ci-test
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: my-artifact
+          path: ./test-results
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
