@@ -9,7 +9,7 @@ test.describe('GET and POST requests example', () => {
     await expect(usersList).toContain(emailOfUser);
   });
 
-  test('Test ability to post request', async ({}) => {
+  test.skip('Test ability to post request', async ({}) => {
     const user = {
       name: 'test',
       job: 'qa'
