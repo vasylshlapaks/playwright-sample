@@ -35,7 +35,7 @@ export class WebPage {
   }
 
   async assertPageScreenshotMatchToSnapshot(page: Page) {
-    await this.page.waitForTimeout(2000);
+    await this.page.waitForTimeout(3000);
     expect(await page.screenshot()).toMatchSnapshot();
   }
 
