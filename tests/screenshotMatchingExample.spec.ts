@@ -7,7 +7,7 @@ test.describe('Check UI matching of elements', () => {
     await webPage.assertElementScreenshotMatchToSnapshot(connectWalletScreen.connectViaMetamaskButton);
   });
 
-  test.only(`Check snapshot of full page`, async ({ page, webPage }) => {
+  test(`Check snapshot of full page`, async ({ page, webPage }) => {
     const sauceDemoUrl = 'https://www.saucedemo.com/';
 
     await page.goto(sauceDemoUrl);
