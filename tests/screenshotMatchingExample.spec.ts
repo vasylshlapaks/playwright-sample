@@ -7,9 +7,10 @@ test.describe('Check UI matching of elements', () => {
     await webPage.assertElementScreenshotMatchToSnapshot(connectWalletScreen.connectViaMetamaskButton);
   });
 
-  test(`Check snapshot of full page`, async ({ page, connectWalletScreen, webPage }) => {
-    await connectWalletScreen.clickConnectWalletButton();
+  test.only(`Check snapshot of full page`, async ({ page, webPage }) => {
+    const sauceDemoUrl = 'https://www.saucedemo.com/';
 
+    await page.goto(sauceDemoUrl);
     await webPage.assertPageScreenshotMatchToSnapshot(page);
   });
 });
