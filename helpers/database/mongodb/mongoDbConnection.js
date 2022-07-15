@@ -1,4 +1,5 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient } = require('mongodb');
+
 const url = process.env.DB_DSN_PHI;
 
 try {
