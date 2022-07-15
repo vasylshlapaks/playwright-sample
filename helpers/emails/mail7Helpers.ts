@@ -33,7 +33,7 @@ export const getLatestEmail = async (email: string, subject: string): Promise<Em
     if (response.ok) {
       const body = await response.json();
       if (body.data.length > 0) {
-        let letter = body.data.find(o => o.mail_source.subject === subject);
+        const letter = body.data.find(o => o.mail_source.subject === subject);
         const mesId = letter._id;
         const rawEmail = letter.mail_source;
         await deleteEmail(mesId);

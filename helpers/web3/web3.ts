@@ -9,7 +9,7 @@ export class Web3Helpers {
 
   async getEthBalance(address) {
     try {
-      let balance = await this.web3.eth.getBalance(address);
+      const balance = await this.web3.eth.getBalance(address);
 
       return await this.web3.utils.fromWei(balance, 'ether')
     } catch (e) {

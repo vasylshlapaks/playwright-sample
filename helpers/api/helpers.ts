@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const apiUrl: String = `https://reqres.in`;
+const apiUrl = `https://reqres.in`;
 
 export const getUsersList = async () => {
   const response = await fetch(`${apiUrl}/api/users?page=2`);
