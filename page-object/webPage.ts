@@ -88,14 +88,14 @@ export class WebPage {
       let intervalId;
       return await new Promise(function(resolve, reject){
         intervalId = setInterval(function(){
-          let clickElement = document.querySelector(elementForClick);
+          const clickElement = document.querySelector(elementForClick);
 
           if (clickElement !== null) {
             clickElement.click();
           }
 
           if (document.querySelector(elementToBePresent) != null) {
-            let itemOffsetParent = document.querySelector(elementToBePresent).offsetParent;
+            const itemOffsetParent = document.querySelector(elementToBePresent).offsetParent;
             if (itemOffsetParent !== null) {
               clearInterval(intervalId);
               return resolve(true); //element found
