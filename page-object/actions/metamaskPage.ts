@@ -92,14 +92,15 @@ export class MetamaskPage extends WebPage {
   }
 
   async getSeedPhrase() {
-    return await this.metamaskElements.seedPhraseBlock.getAttribute('text');
+    await this.metamaskElements.revealSeedPhraseButton.click();
+    return await this.metamaskElements.seedPhraseBlock.textContent();
   }
 
   async selectSeedPhraseInCorrectOrder(seedPhrase: string) {
     const arrayOfWords =  seedPhrase.split(" ");
 
-    for (let word in arrayOfWords) {
-      let wordSelector = this.page.locator(`[data-testid="draggable-seed-${seedPhrase}"]`);
+    for (const word of arrayOfWords) {
+      let wordSelector = this.page.locator(`[data-testid="draggable-seed-${word}"]`);
 
       await wordSelector.click();
     }
