@@ -5,7 +5,7 @@ import {Locator, Page} from '@playwright/test';
 export class MetamaskPageElements {
   readonly nextButton: Locator;
   readonly iAmNewButton: Locator;
-  readonly passwordFieldTest: Locator;
+  readonly createPasswordField: Locator;
   readonly confirmPasswordField: Locator;
   readonly termsCheckbox: Locator;
   readonly confirmButton: Locator;
@@ -22,12 +22,15 @@ export class MetamaskPageElements {
   readonly optionMenuButton: Locator;
   readonly accountDetailsMenuButton: Locator;
   readonly endOfFlowEmoji: Locator;
+  readonly createNewWalletButton: Locator;
+  readonly revealSeedPhraseButton: Locator;
+  readonly seedPhraseBlock: Locator;
 
   constructor(page: Page) {
     this.confirmButton = page.locator('button');
     this.nextButton = page.locator('(//button)[1]');
     this.iAmNewButton = this.nextButton;
-    this.passwordFieldTest = page.locator('#create-password');
+    this.createPasswordField = page.locator('#create-password');
     this.confirmPasswordField = page.locator('#confirm-password');
     this.termsCheckbox = page.locator('[role="checkbox"]');
     this.passwordField = page.locator('#password');
@@ -42,6 +45,9 @@ export class MetamaskPageElements {
     this.copyMetamaskAccountAddressButton = page.locator('[class="qr-code__address"]');
     this.optionMenuButton = page.locator('[data-testid="account-options-menu-button"]');
     this.accountDetailsMenuButton = page.locator('[data-testid="account-options-menu__account-details"]');
-    this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]')
+    this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]');
+    this.createNewWalletButton = page.locator('(//button)[2]');
+    this.revealSeedPhraseButton = page.locator('.reveal-seed-phrase__reveal-button');
+    this.seedPhraseBlock = page.locator('[class="reveal-seed-phrase__secret-words notranslate"]');
   }
 }

@@ -77,4 +77,31 @@ export class MetamaskPage extends WebPage {
       signButton.click()
     ]);
   }
+
+  async enterPasswordsForNewWallet(password: string) {
+    await this.metamaskElements.createPasswordField.fill(password);
+    await this.metamaskElements.confirmPasswordField.fill(password)
+  }
+
+  async selectTermsCheckbox() {
+    await this.metamaskElements.termsCheckbox.click()
+  }
+
+  async clickCreateNewWalletButton() {
+    await this.metamaskElements.confirmButton.click()
+  }
+
+  async getSeedPhrase() {
+    return await this.metamaskElements.seedPhraseBlock.getAttribute('text');
+  }
+
+  async selectSeedPhraseInCorrectOrder(seedPhrase: string) {
+    const arrayOfWords =  seedPhrase.split(" ");
+
+    for (let word in arrayOfWords) {
+      let wordSelector = this.page.locator(`[data-testid="draggable-seed-${seedPhrase}"]`);
+
+      await wordSelector.click();
+    }
+  }
 }
