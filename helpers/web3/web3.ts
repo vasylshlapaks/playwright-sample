@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import { Abi } from './web3Data'
 
 export class Web3Helpers {
   web3;
@@ -11,7 +12,7 @@ export class Web3Helpers {
     try {
       const balance = await this.web3.eth.getBalance(address);
 
-      return await this.web3.utils.fromWei(balance, 'ether')
+      return this.web3.utils.fromWei(balance, 'ether');
     } catch (e) {
       throw new Error('Eth balance checking failed:' + e)
     }
@@ -33,5 +34,17 @@ export class Web3Helpers {
     } catch (e) {
       throw new Error('Sending crypto failed:' + e)
     }
+  }
+
+  async getTokenBalance(tokenAddress, walletAddress) {
+    const contract = new this.web3.eth.Contract(Abi, tokenAddress, {from: walletAddress});
+    const balance = await contract.methods.balanceOf(walletAddress).call()
+      .then(function(result) {
+        return result
+      });
+    const decimals = await contract.methods.decimals().call(function(error, d) {
+      return d
+    })
+    return balance * (10 ** decimals)
   }
 }
