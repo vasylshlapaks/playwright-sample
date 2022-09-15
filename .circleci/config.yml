@@ -6,12 +6,15 @@ jobs:
       - image: mcr.microsoft.com/playwright:v1.22.0-focal
     steps:
       - checkout
+      - restore_cache:
+          key: dependencies-{{ checksum "package.json" }}
       - run:
           name: "Install dependencies"
           command: npm install
-      - run:
-          name: "Install Playwright browsers"
-          command: npx playwright install
+      - save_cache:
+          paths:
+            - node_modules
+          key: dependencies-{{ checksum "package.json" }}
       - run:
           name: "Run tests"
           command: npm run ci-test
