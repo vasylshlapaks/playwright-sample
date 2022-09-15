@@ -39,7 +39,7 @@ export class ConnectWalletScreen extends WebPage {
       await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
       await this.page.waitForTimeout(timeouts.timeoutForSignWindow);
 
-      const pages = await this.context.pages().length;
+      const pages = this.context.pages().length;
 
       if (pages > 3) {
         const signPage = this.context.pages()[3];

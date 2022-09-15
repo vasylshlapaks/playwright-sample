@@ -109,4 +109,12 @@ export class WebPage {
       })
     }, [elementForClick, elementToBePresent]);
   }
+
+  async checkTextInListOfElements(locator: Locator, text: string) {
+    let texts = await locator.allTextContents();
+
+    for (const singleText of texts) {
+      expect(singleText).toContain(text);
+    }
+  }
 }
