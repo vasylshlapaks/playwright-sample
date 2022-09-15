@@ -11,6 +11,9 @@ jobs:
       - run:
           name: "Install dependencies"
           command: npm install
+      - run:
+          name: "Install Playwright browsers"
+          command: npx playwright install
       - save_cache:
           paths:
             - node_modules
