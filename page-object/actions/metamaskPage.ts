@@ -105,4 +105,14 @@ export class MetamaskPage extends WebPage {
       await wordSelector.click();
     }
   }
+
+  async changeNetworkTo(network: String) {
+    await this.metamaskElements.networksDropdown.click();
+    await this.metamaskElements.showTestNetworksButton.click();
+    await this.metamaskElements.showTestNetworksToggle.click();
+    await this.metamaskElements.networksDropdown.click();
+
+    const networkToSelect = this.page.locator(`//span[contains(text(), "${network}")]`)
+    await networkToSelect.click();
+  }
 }

@@ -25,6 +25,10 @@ export class MetamaskPageElements {
   readonly createNewWalletButton: Locator;
   readonly revealSeedPhraseButton: Locator;
   readonly seedPhraseBlock: Locator;
+  readonly networksDropdown: Locator;
+  readonly showTestNetworksButton: Locator;
+  readonly showTestNetworksToggle: Locator;
+  readonly kovanNetworkButton: Locator;
 
   constructor(page: Page) {
     this.confirmButton = page.locator('button');
@@ -49,5 +53,9 @@ export class MetamaskPageElements {
     this.createNewWalletButton = page.locator('(//button)[2]');
     this.revealSeedPhraseButton = page.locator('.reveal-seed-phrase__reveal-button');
     this.seedPhraseBlock = page.locator('[class="reveal-seed-phrase__secret-words notranslate"]');
+    this.networksDropdown = page.locator('//div[contains(@class, "network-display")]');
+    this.showTestNetworksButton = page.locator('[class="network-dropdown-content--link"]');
+    this.showTestNetworksToggle = page.locator('[class="settings-page__content-item-col"] >> nth=6');
+    this.kovanNetworkButton = page.locator('//span[contains(text(), "Kovan")]');
   }
 }
