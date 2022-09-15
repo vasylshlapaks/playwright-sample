@@ -59,8 +59,8 @@ export const test = base.extend<ixsFixtures>({
     await use(new TopNavigationBar(page, context));
   },
 
-  webPage: async ({ page, context }, use) => {
-    await use(new WebPage(page, context));
+  webPage: async ({ page, context , browserName}, use) => {
+    await use(new WebPage(page, context, browserName));
   },
 
   kycScreen: async ({ connectWalletScreen, page }, use) => {

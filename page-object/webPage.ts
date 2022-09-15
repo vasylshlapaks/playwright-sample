@@ -1,14 +1,16 @@
-import {BrowserContext, expect, Locator, Page} from '@playwright/test';
+import {Browser, BrowserContext, expect, Locator, Page} from '@playwright/test';
 import config from "../playwright.config";
 
 export class WebPage {
   readonly page: Page;
   readonly context: BrowserContext;
+  readonly browserName: string;
   readonly loader: Locator;
 
-  constructor(page: Page, context?: BrowserContext) {
+  constructor(page: Page, context?: BrowserContext, browserName?: string) {
     this.page = page;
     this.context = context;
+    this.browserName = browserName;
     this.loader = page.locator('[img[alt="Loading..."]')
   }
 
@@ -115,6 +117,14 @@ export class WebPage {
 
     for (const singleText of texts) {
       expect(singleText).toContain(text);
+    }
+  }
+
+  async doSomethingIfSpecificBrowser() {
+    if (this.browserName == 'firefox') {
+      console.log('firefox')
+    } else {
+      console.log('not firefox')
     }
   }
 }
