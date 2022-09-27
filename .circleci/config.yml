@@ -4,6 +4,7 @@ jobs:
   test:
     docker:
       - image: mcr.microsoft.com/playwright:v1.22.0-focal
+    parallelism: 2
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +21,7 @@ jobs:
           key: dependencies-{{ checksum "package.json" }}
       - run:
           name: "Run tests"
-          command: npm run ci-test
+          command: npm run ci-test | circleci tests split --split-by=timings
           no_output_timeout: 15m
       - store_artifacts:
           path: test-results
