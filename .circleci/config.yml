@@ -23,7 +23,9 @@ jobs:
           command: npm run ci-test
           no_output_timeout: 15m
       - store_artifacts:
-          path: ./test-results
+          path: test-results
+      - store_test_results:
+          path: test-results
 
 workflows:
   version: 2
