@@ -21,12 +21,14 @@ jobs:
           key: dependencies-{{ checksum "package.json" }}
       - run:
           name: "Run tests"
-          command: npm run ci-test | circleci tests split --split-by=timings
+          command: |
+            TEST=$(circleci tests glob "tests/*.ts" | circleci tests split --split-by=timings)
+            npm run ci-test $TEST
           no_output_timeout: 15m
       - store_artifacts:
           path: test-results
       - store_test_results:
-          path: test-results
+          path: test-results/xml-results.xml
 
 workflows:
   version: 2
