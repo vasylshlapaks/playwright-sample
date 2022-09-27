@@ -14,4 +14,4 @@ export const userForSettingsTests: User = {
   lastName: 'test',
   phoneNumber: '+995511111111',
   authTokenName: 'AUTH_TOKEN_FOR_SETTINGS'
-};
+}; 
