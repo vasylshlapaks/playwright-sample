@@ -5,7 +5,7 @@ const config: PlaywrightTestConfig = {
   globalTimeout: timeouts.globalTestsTimeout,
   timeout: timeouts.testTimeout,
   retries: process.env.E2E_CI ? 2 : 0,
-  reporter: [['list'], ['html', { outputFolder: 'test-results/report' }] ],
+  reporter: [['list'], ['html', { outputFolder: 'test-results/report' }], ['junit', { outputFile: 'test-results/xml-results.xml' }] ],
   testDir: './tests',
   globalSetup: './setup/globalSetup.ts',
   outputDir: './test-results',
