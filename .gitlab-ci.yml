@@ -16,9 +16,8 @@ stages:
         - node_modules
   script:
     - npm install
-    - npm run start & npx wait-on http://localhost:3000
-    - cd tests/e2e && npx playwright install --with-deps
-    - npm run ci-test
+    - npx playwright install
+    - node split.js | xargs npm run ci-test
   artifacts:
     name: "test-results-$CI_COMMIT_REF_NAME"
     expire_in: 8 weeks
@@ -28,16 +27,15 @@ stages:
 
 test dev:
   stage: test
+  parallel: 2
   environment: dev
   only:
-    - e2e-tests-dev
+    - master
   variables:
-    ENVIRONMENT: "dev"
-    MAIL7_API_KEY: $E2E_TESTS_MAIL7_API_KEY
-    MAIL7_API_SECRET: $E2E_TESTS_MAIL7_API_SECRET
+    INFURA_KEY: $E2E_INFURA_KEY
+    USER_ENCRYPTED_PASSWORD: $E2E_TESTS_USER_ENCRYPTED_PASSWORD
     USER_PASSWORD: $E2E_TESTS_USER_PASSWORD
     METAMASK_RECOVERY: $E2E_TESTS_METAMASK_RECOVERY
     METAMASK_PASSWORD: $E2E_TESTS_METAMASK_PASSWORD
-    ALGORAND_RECOVERY: $E2E_TESTS_ALGORAND_RECOVERY
-    ALGORAND_PASSWORD: $E2E_TESTS_ALGORAND_PASSWORD
+    METAMASK_PRIVATE_KEY: $E2E_TESTS_METAMASK_PRIVATE_KEY
   <<: *test
