@@ -11,6 +11,7 @@ on:
 jobs:
   integration-tests:
     name: E2E Tests
+    environment: $GITHUB_BASE_REF
     env:
       METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
       METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
@@ -22,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
+      - name: Install dependencies
+        run: echo [[${environment}]]
       - uses: actions/checkout@v2
       - name: Set up node
         uses: actions/setup-node@v2
