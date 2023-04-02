@@ -1,11 +1,11 @@
-import { PlaywrightTestConfig } from '@playwright/test';
+import {devices, PlaywrightTestConfig} from '@playwright/test';
 import {timeouts} from './helpers/timeouts'
 
 const config: PlaywrightTestConfig = {
   globalTimeout: timeouts.globalTestsTimeout,
   timeout: timeouts.testTimeout,
   retries: process.env.E2E_CI ? 2 : 0,
-  reporter: [['list'], ['html', { outputFolder: 'test-results/report' }], ['junit', { outputFile: 'test-results/xml-results.xml' }] ],
+  reporter: [['list'], ['html', { outputFolder: 'html-report' }], ['junit', { outputFile: 'test-results/xml-results.xml' }] ],
   testDir: './tests',
   globalSetup: './setup/globalSetup.ts',
   outputDir: './test-results',
@@ -28,6 +28,15 @@ const config: PlaywrightTestConfig = {
     }
   },
   snapshotDir: 'testData/snapshots',
+  projects: [
+    { name: 'setup', testDir: './setup', testMatch: /.*\.setup\.ts/ },
+
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
+    },
+  ],
 };
 
 export default config;
