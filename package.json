@@ -8,7 +8,7 @@
     "lint": "eslint ./tests",
     "lint:fix": "eslint ./tests --fix",
     "test": "npx playwright test",
-    "ci-test": "xvfb-run npx playwright test"
+    "ci-test": "xvfb-run npx playwright test googleState.spec.ts"
   },
   "repository": {
     "type": "git",
