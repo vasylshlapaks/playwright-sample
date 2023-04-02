@@ -1,5 +1,5 @@
 import { BrowserContext, Locator, Page, expect } from '@playwright/test';
-import { WebPage } from './WebPage';
+import { WebPage } from './webPage';
 
 export class GoogleSingIn extends WebPage {
   readonly emailField: Locator;
